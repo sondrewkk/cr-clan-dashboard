@@ -1,5 +1,5 @@
 <template>
   <div class="clan">
-    <h1>Clan</h1>
+    <h1 class="subheading grey--text">Clan</h1>
   </div>
 </template>

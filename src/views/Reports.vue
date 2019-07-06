@@ -1,5 +1,5 @@
 <template>
   <div class="reports">
-    <h1>Reports</h1>
+    <h1 class="subheading grey--text">Reports</h1>
   </div>
 </template>
