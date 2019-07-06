@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Dashboard.vue'
+import Login from './views/Login.vue'
+import Register from "./views/Register.vue"
+import Dashboard from './views/Dashboard.vue'
 import Clan from './views/Clan.vue'
 import Family from './views/Family.vue'
 import Reports from './views/Reports.vue'
@@ -15,8 +17,18 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/dashboard',
       name: 'dashboard',
-      component: Home
+      component: Dashboard
     },
     {
       path: '/clan',
