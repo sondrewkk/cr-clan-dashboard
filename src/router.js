@@ -17,18 +17,18 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/login',
       name: 'Login',
       component: Login
     },
     {
-      path: '/',
+      path: '/register',
       name: 'Register',
       component: Register
-    },
-    {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: Dashboard
     },
     {
       path: '/clan',
@@ -49,6 +49,10 @@ export default new Router({
       path: '/settings',
       name: 'settings',
       component: Settings
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
