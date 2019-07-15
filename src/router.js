@@ -12,7 +12,7 @@ import Settings from './views/Settings.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL || "/home",
   routes: [
@@ -34,27 +34,32 @@ export default new Router({
         {
           path: '',
           name: 'dashboard',
-          component: Dashboard
+          component: Dashboard,
+          meta: { requiresAuth: true }
         },
         {
           path: 'clan',
           name: 'clan',
-          component: Clan
+          component: Clan,
+          meta: { requiresAuth: true }
         },
         {
           path: 'family',
           name: 'family',
-          component: Family
+          component: Family,
+          meta: { requiresAuth: true }
         },
         {
           path: 'reports',
           name: 'reports',
-          component: Reports
+          component: Reports,
+          meta: { requiresAuth: true }
         },
         {
           path: 'settings',
           name: 'settings',
-          component: Settings
+          component: Settings,
+          meta: { requiresAuth: true }
         }
       ]
     },
@@ -63,4 +68,24 @@ export default new Router({
       redirect: '/'
     }
   ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    // eslint-disable-next-line no-constant-condition
+    if (true) { // TODO: Add a function to verify if a user is logged in or not
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // make sure to always call next()!
+  }
+});
+
+export default router;
