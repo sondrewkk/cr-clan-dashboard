@@ -1,11 +1,11 @@
 <template>
-    <h2>Register</h2>
+  <h2>Register</h2>
 </template>
 
 <script>
-export default {
+  export default {
 
-}
+  }
 </script>
 
 <style>

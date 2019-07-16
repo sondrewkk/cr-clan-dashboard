@@ -6,12 +6,12 @@
     </v-content>
 
   </v-app>  -->
-  <router-view></router-view>
+  <router-view />
 </template>
 
 <script>
 
-export default {
-  name: 'CR-CLAN-DASHBOARD'
-}
+  export default {
+    name: 'CRCLANDASHBOARD'
+  }
 </script>

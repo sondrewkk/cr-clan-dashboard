@@ -9,12 +9,11 @@ import Family from './views/Family.vue'
 import Reports from './views/Reports.vue'
 import Settings from './views/Settings.vue'
 
-
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL || "/home",
+  base: process.env.BASE_URL || '/home',
   routes: [
     {
       path: '/login',
@@ -68,7 +67,7 @@ const router = new Router({
       redirect: '/'
     }
   ]
-});
+})
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -86,6 +85,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next() // make sure to always call next()!
   }
-});
+})
 
-export default router;
+export default router
