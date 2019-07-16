@@ -14,6 +14,9 @@
             sm8
             md4
           >
+            <h1 class="text-xs-center mb-3">
+              Login
+            </h1>
             <v-form>
               <v-text-field
                 prepend-icon="person"
