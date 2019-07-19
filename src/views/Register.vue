@@ -103,7 +103,7 @@
     methods: {
       submit () {
         if (this.$refs.form.validate()) {
-          console.log(`${this.name},${this.email},${this.password}`)
+          console.log(`${this.username},${this.email},${this.password}`)
         }
       }
     }
