@@ -19,20 +19,25 @@
             </h1>
             <v-form>
               <v-text-field
+                v-model="email"
                 prepend-icon="person"
-                name="login"
-                label="Login"
+                name="email"
+                label="Email"
                 type="text"
               />
               <v-text-field
                 id="password"
+                v-model="password"
                 prepend-icon="lock"
                 name="password"
                 label="Password"
                 type="password"
               />
             </v-form>
-            <v-btn color="primary">
+            <v-btn
+              color="primary"
+              @click="login"
+            >
               Login
             </v-btn>
           </v-flex>
@@ -46,8 +51,18 @@
   export default {
     data () {
       return {
-        username: '',
+        email: '',
         password: ''
+      }
+    },
+    methods: {
+      login () {
+        const { email, password } = this
+        this.$store.dispatch('user/login', { email, password })
+          .then(loggedIn => {
+              console.log(loggedIn)
+            })
+          .catch(err => console.err(err))
       }
     }
   }
