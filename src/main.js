@@ -5,10 +5,12 @@ import router from './router'
 import { store } from './store'
 import Axios from 'axios'
 
+require('dotenv').config()
+
 Vue.config.productionTip = false
 
 const http = Axios.create({
-  baseURL: 'http://localhost:8081/api'
+  baseURL: process.env.API_URL
 })
 
 Vue.prototype.$http = http
