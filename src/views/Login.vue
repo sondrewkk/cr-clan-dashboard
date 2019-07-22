@@ -58,11 +58,7 @@
     methods: {
       login () {
         const { email, password } = this
-        this.$store.dispatch('user/login', { email, password })
-          .then(loggedIn => {
-              console.log(loggedIn)
-            })
-          .catch(err => console.err(err))
+        this.$store.dispatch('userAuthentication/login', { email, password })
       }
     }
   }
