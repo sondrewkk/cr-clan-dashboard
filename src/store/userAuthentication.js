@@ -3,7 +3,7 @@ import user from '../api/user'
 export const userAuthentication = {
   namespaced: true,
   state: {
-    status: 'Not started',
+    status: 'Unauthorized',
     token: ''
   },
   actions: {
@@ -18,6 +18,10 @@ export const userAuthentication = {
       } catch (err) {
         console.error(err)
       }
+    },
+    logout ({ commit }) {
+      commit('setToken', '')
+      commit('setStatusUnauthorized')
     }
   },
   mutations: {
@@ -25,10 +29,13 @@ export const userAuthentication = {
       state.token = token
     },
     setStatusAuthenticating (state) {
-      state.status = 'Authenticating'
+      state.status = 'Authorizing'
     },
     setStatusAuthenticated (state) {
-      state.status = 'Authenticated'
+      state.status = 'Authorized'
+    },
+    setStatusUnauthorized (state) {
+      state.status = 'Unauthorized'
     }
   },
   getters: {

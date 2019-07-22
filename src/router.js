@@ -74,7 +74,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (store.getters['userAuthentication/status'] === 'Authenticated') {
+    if (store.getters['userAuthentication/status'] === 'Authorized') {
       // TODO: Navigate to from route after authentication
       next()
     } else {

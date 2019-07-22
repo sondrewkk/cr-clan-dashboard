@@ -16,6 +16,7 @@
       <v-btn
         flat
         color="grey"
+        @click="logout"
       >
         <span>Sign Out</span>
         <v-icon right>
@@ -60,6 +61,14 @@
           { icon: 'insert_chart_outlined', text: 'Reports', route: '/reports' },
           { icon: 'settings', text: 'Settings', route: '/settings' }
         ]
+      }
+    },
+    methods: {
+      async logout () {
+        try {
+          await this.$store.dispatch('userAuthentication/logout')
+          this.$router.push('/login')
+        } catch (err) { console.error(err) }
       }
     }
   }
