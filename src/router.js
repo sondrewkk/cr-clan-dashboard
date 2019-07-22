@@ -8,6 +8,7 @@ import Clan from './views/Clan.vue'
 import Family from './views/Family.vue'
 import Reports from './views/Reports.vue'
 import Settings from './views/Settings.vue'
+import { store } from './store'
 
 Vue.use(Router)
 
@@ -73,14 +74,14 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    // eslint-disable-next-line no-constant-condition
-    if (true) { // TODO: Add a function to verify if a user is logged in or not
+    if (store.getters['userAuthentication/status'] === 'Authenticated') {
+      // TODO: Navigate to from route after authentication
+      next()
+    } else {
       next({
         path: '/login',
         query: { redirect: to.fullPath }
       })
-    } else {
-      next()
     }
   } else {
     next() // make sure to always call next()!

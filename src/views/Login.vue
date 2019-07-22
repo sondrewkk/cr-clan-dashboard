@@ -56,9 +56,14 @@
       }
     },
     methods: {
-      login () {
-        const { email, password } = this
-        this.$store.dispatch('userAuthentication/login', { email, password })
+      async login () {
+        try {
+          const { email, password } = this
+          const response = await this.$store.dispatch('userAuthentication/login', { email, password })
+          if (response.data.success) {
+            this.$router.push('/')
+          }
+        } catch (err) { console.error(err) }
       }
     }
   }

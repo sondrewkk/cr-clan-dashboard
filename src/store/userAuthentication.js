@@ -14,6 +14,7 @@ export const userAuthentication = {
         const token = response.data.token
         commit('setToken', token)
         commit('setStatusAuthenticated')
+        return response
       } catch (err) {
         console.error(err)
       }
