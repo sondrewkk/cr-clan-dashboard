@@ -1,21 +1,17 @@
 <template>
-  <v-app>
-
-    <v-content>
+  <!-- <v-app class="grey lighten-4">
+    <Navbar />
+    <v-content class="mx-4 mb-4">
       <router-view></router-view>
     </v-content>
 
-  </v-app>
+  </v-app>  -->
+  <router-view />
 </template>
 
 <script>
 
-export default {
-  name: 'App',
-  data () {
-    return {
-      //
-    }
+  export default {
+    name: 'CRCLANDASHBOARD'
   }
-}
 </script>

@@ -1,0 +1,8 @@
+{
+  "extends": "vuetify",
+  "rules" : {
+    "no-multiple-empty-lines" : 0,
+    "no-trailing-spaces" : 0,
+    "padded-blocks" : 0
+  }
+}
