@@ -28,36 +28,35 @@ const router = new Router({
     },
     {
       path: '/',
-      name: 'Home',
       component: Home,
       children: [
         {
           path: '',
-          name: 'dashboard',
+          name: 'Dashboard',
           component: Dashboard,
           meta: { requiresAuth: true }
         },
         {
           path: 'clan',
-          name: 'clan',
+          name: 'Clan',
           component: Clan,
           meta: { requiresAuth: true }
         },
         {
           path: 'family',
-          name: 'family',
+          name: 'Family',
           component: Family,
           meta: { requiresAuth: true }
         },
         {
           path: 'reports',
-          name: 'reports',
+          name: 'Reports',
           component: Reports,
           meta: { requiresAuth: true }
         },
         {
           path: 'settings',
-          name: 'settings',
+          name: 'Settings',
           component: Settings,
           meta: { requiresAuth: true }
         }
@@ -71,21 +70,25 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  
+  // Check if user need to be authorized to access route
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (store.getters['userAuthentication/status'] === 'Authorized') {
-      // TODO: Navigate to from route after authentication
+    const authorizeStatus = store.getters['userAuthentication/status']
+    
+    if (authorizeStatus === 'Authorized') {
+      // If authorized go to route
       next()
     } else {
+      // If the user is not authorized redirect to login page with the requested path as redirect
       next({
         path: '/login',
         query: { redirect: to.fullPath }
       })
     }
   } else {
-    next() // make sure to always call next()!
-  }
+    // Go to route if authoriziation is not requierd
+    next()
+  } 
 })
 
 export default router

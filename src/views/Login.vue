@@ -60,8 +60,15 @@
         try {
           const { email, password } = this
           const response = await this.$store.dispatch('userAuthentication/login', { email, password })
+          
           if (response.data.success) {
-            this.$router.push('/')
+            const redirect = this.$router.currentRoute.query.redirect
+            
+            if (redirect) {
+              this.$router.push(`${redirect}`)
+            } else {
+              this.$router.push('/')
+            }
           }
         } catch (err) { console.error(err) }
       }
