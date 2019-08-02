@@ -62,6 +62,8 @@
           const response = await this.$store.dispatch('userAuthentication/login', { email, password })
           
           if (response.data.success) {
+            // Check if user has verified the player profile, if not go to player route
+            
             const redirect = this.$router.currentRoute.query.redirect
             
             if (redirect) {
