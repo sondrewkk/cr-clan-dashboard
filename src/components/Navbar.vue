@@ -56,7 +56,7 @@
         drawerOpen: true,
         menuItems: [
           { icon: 'dashboard', text: 'Dashboard', route: '/' },
-          { icon: 'person', text: 'Me', route: '/player' },
+          { icon: 'person', text: 'Me', route: '/user' },
           { icon: 'group', text: 'Clan', route: '/clan' },
           { icon: 'device_hub', text: 'Family', route: '/family' },
           { icon: 'insert_chart_outlined', text: 'Reports', route: '/reports' },

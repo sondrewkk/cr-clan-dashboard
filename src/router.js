@@ -4,7 +4,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Home from './views/Home.vue'
 import Dashboard from './views/Dashboard.vue'
-import Player from './views/Player.vue'
+import User from './views/User.vue'
 import Clan from './views/Clan.vue'
 import Family from './views/Family.vue'
 import Reports from './views/Reports.vue'
@@ -38,9 +38,9 @@ const router = new Router({
           meta: { requiresAuth: true }
         },
         {
-          path: 'player',
-          name: 'Player',
-          component: Player,
+          path: 'user',
+          name: 'User',
+          component: User,
           meta: { requiresAuth: true }
         },
         {
