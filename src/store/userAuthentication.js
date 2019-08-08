@@ -12,8 +12,15 @@ export const userAuthentication = {
         commit('setStatusAuthenticating')
         const response = await user.login(email, password)
         const token = response.data.token
+        const isVerified = response.data.isVerified
+        
         commit('setToken', token)
         commit('setStatusAuthenticated')
+
+        if (isVerified) {
+          commit('user/verify', null, { root: true })
+        }   
+        
         return response
       } catch (err) {
         console.error(err)
