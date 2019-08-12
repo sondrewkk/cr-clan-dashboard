@@ -8,12 +8,13 @@ export const user = {
     verified: false
   },
   actions: {
-    async verifyTag ({ commit }, tag) {
+    async verifyTag ({ commit, state }, tag) {
       const playerTag = tag.tag
+      const id = state.id.id
       const playerProfile = await playerApi.profile(playerTag)
       
       if (playerProfile.data.tag === playerTag) {
-        const verified = await userApi.verify()
+        const verified = await userApi.verify(id)
 
         if (verified) {
           commit('verify')
