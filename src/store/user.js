@@ -1,8 +1,10 @@
 import playerApi from '../api/player'
+import userApi from '../api/user'
 
 export const user = {
   namespaced: true,
   state: {
+    id: '',
     verified: false
   },
   actions: {
@@ -11,7 +13,11 @@ export const user = {
       const playerProfile = await playerApi.profile(playerTag)
       
       if (playerProfile.data.tag === playerTag) {
-        commit('verify')
+        const verified = await userApi.verify()
+
+        if (verified) {
+          commit('verify')
+        }
       } else {
         console.log('Could not verify. Tag != tag')
       }
@@ -20,6 +26,9 @@ export const user = {
   mutations: {
     verify (state) {
       state.verified = true
+    },
+    setId (state, id) {
+      state.id = id
     }
   },
   getters: {

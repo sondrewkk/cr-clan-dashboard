@@ -13,5 +13,18 @@ export default {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  async verify (id) {
+    try {
+       const response = await api.post('/user/verify', { id })
+
+       if (response.data.success) {
+        return response.data.verified
+       }
+    } catch (err) {
+      console.log(err)
+    }
   }
+
 }

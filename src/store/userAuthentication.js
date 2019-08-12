@@ -16,6 +16,7 @@ export const userAuthentication = {
         
         commit('setToken', token)
         commit('setStatusAuthenticated')
+        commit('user/setId', { id: response.data.userId }, { root: true })
 
         if (isVerified) {
           commit('user/verify', null, { root: true })
