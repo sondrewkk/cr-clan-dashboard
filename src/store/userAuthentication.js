@@ -13,6 +13,7 @@ export const userAuthentication = {
         const response = await user.login(email, password)
         const token = response.data.token
         const isVerified = response.data.isVerified
+        const tag = response.data.playerProfile.tag
         
         commit('setToken', token)
         commit('setStatusAuthenticated')
@@ -20,6 +21,7 @@ export const userAuthentication = {
 
         if (isVerified) {
           commit('user/verify', null, { root: true })
+          commit('user/setTag', tag, { root: true })
         }   
         
         return response

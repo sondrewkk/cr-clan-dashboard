@@ -63,13 +63,18 @@
           
           if (response.data.success) {
             // Check if user has verified the player profile, if not go to player route
-            
-            const redirect = this.$router.currentRoute.query.redirect
-            
-            if (redirect) {
-              this.$router.push(`${redirect}`)
+            const isVerified = this.$store.getters['user/isVerified']
+
+            if (!isVerified) {
+              this.$router.push('/user')
             } else {
-              this.$router.push('/')
+              const redirect = this.$router.currentRoute.query.redirect
+                          
+              if (redirect) {
+                this.$router.push(`${redirect}`)
+              } else {
+                this.$router.push('/')
+              }
             }
           }
         } catch (err) { console.error(err) }

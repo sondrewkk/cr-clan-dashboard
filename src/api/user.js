@@ -15,13 +15,13 @@ export default {
     }
   },
 
-  async verify (id) {
+  async verify (id, playerProfile) {
     try {
-       const response = await api.post('/user/verify', { id })
+      const response = await api.post('/user/verify', { id, playerProfile })
 
-       if (response.data.success) {
+      if (response.data.success) {
         return response.data.verified
-       }
+      }
     } catch (err) {
       console.log(err)
     }

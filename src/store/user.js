@@ -5,19 +5,26 @@ export const user = {
   namespaced: true,
   state: {
     id: '',
-    verified: false
+    verified: false,
+    tag: ''
   },
   actions: {
     async verifyTag ({ commit, state }, tag) {
       const playerTag = tag.tag
       const id = state.id.id
-      const playerProfile = await playerApi.profile(playerTag)
+      const response = await playerApi.profile(playerTag)
+      const playerProfile = response.data
       
-      if (playerProfile.data.tag === playerTag) {
-        const verified = await userApi.verify(id)
+      if (playerProfile.tag === playerTag) {
+        const verified = await userApi.verify(id, {
+          // Shortcut since playerprofile schema is not complete
+          tag: playerProfile.tag,
+          name: playerProfile.name
+        })
 
         if (verified) {
           commit('verify')
+          commit('setTag', playerProfile.tag)
         }
       } else {
         console.log('Could not verify. Tag != tag')
@@ -30,9 +37,13 @@ export const user = {
     },
     setId (state, id) {
       state.id = id
+    },
+    setTag (state, tag) {
+      state.tag = tag
     }
   },
   getters: {
-    isVerified: state => { return state.verified }
+    isVerified: state => { return state.verified },
+    tag: state => { return state.tag }
   }
 }
