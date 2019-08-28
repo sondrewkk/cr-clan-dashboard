@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
-import Home from './views/Home.vue'
 import Dashboard from './views/Dashboard.vue'
 import User from './views/User.vue'
 import Clan from './views/Clan.vue'
@@ -29,45 +28,39 @@ const router = new Router({
     },
     {
       path: '/',
-      component: Home,
-      children: [
-        {
-          path: '',
-          name: 'Dashboard',
-          component: Dashboard,
-          meta: { requiresAuth: true }
-        },
-        {
-          path: 'user',
-          name: 'User',
-          component: User,
-          meta: { requiresAuth: true }
-        },
-        {
-          path: 'clan',
-          name: 'Clan',
-          component: Clan,
-          meta: { requiresAuth: true }
-        },
-        {
-          path: 'family',
-          name: 'Family',
-          component: Family,
-          meta: { requiresAuth: true }
-        },
-        {
-          path: 'reports',
-          name: 'Reports',
-          component: Reports,
-          meta: { requiresAuth: true }
-        },
-        {
-          path: 'settings',
-          name: 'Settings',
-          component: Settings,
-          meta: { requiresAuth: true }
-        }
-      ]
+      name: 'Dashboard',
+      component: Dashboard,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/user',
+      name: 'User',
+      component: User,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/clan',
+      name: 'Clan',
+      component: Clan,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/family',
+      name: 'Family',
+      component: Family,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/reports',
+      name: 'Reports',
+      component: Reports,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
+      meta: { requiresAuth: true }
     },
     {
       path: '*',
