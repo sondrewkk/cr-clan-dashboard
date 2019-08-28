@@ -12,6 +12,9 @@
 <script>
 
   export default {
-    name: 'CRCLANDASHBOARD'
+    name: 'CRCLANDASHBOARD',
+    created () {
+      this.$vuetify.theme.dark = true
+    }
   }
 </script>
