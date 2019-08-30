@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
-    <v-layout row>
+    <!-- <v-layout 
+      v-if="player" 
+      row
+    >
       <v-flex xs12>
         <v-layout column>
           <h3>{{ player.name }}</h3>
@@ -17,7 +20,28 @@
           </v-layout>
         </v-layout>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
+    <v-row v-if="player">
+      <v-col 
+        cols="12"
+        align="start"
+        justify="start"
+      >
+        <h1>{{ player.name }}</h1>
+        <p class="mb-0">#{{ player.tag }}</p>
+        <v-row no-gutters>
+          <p>{{ player.trophies }} / {{ player.stats.maxTrophies }} PB</p>
+          <v-img 
+            class=" ml-2" 
+            src="https://royaleapi.com/static/img/ui/trophy.png" 
+            max-height="22px" 
+            max-width="22px" 
+            aspect-ratio="1"
+          />
+        </v-row>
+        <v-divider />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -25,21 +49,23 @@
   import playerApi from '../../api/player'
 
   export default {
-    data () {
-      return {
-        player: {}
-      }
+    data: () => ({
+      player: null,
+      chests: null
+    }),
+    created () {
+      this.fetchPlayerInfo()
     },
-    async created () {
-      try {
-        const tag = this.$store.getters['user/tag']
-        const response = await playerApi.profile(tag)
-        this.player = response.data
-
-      } catch (err) { 
-        console.log(err)
+    methods: {
+      async fetchPlayerInfo () {
+        try {
+          const tag = this.$store.getters['user/tag']
+          const response = await playerApi.profile(tag)
+          this.player = response.data
+        } catch (err) { 
+          console.log(err)
+        }
       }
-      
     }
   }
 </script>
