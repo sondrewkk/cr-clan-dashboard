@@ -4,6 +4,7 @@
       v-model="drawer" 
       app
       clipped
+      :width="!appBarVisible ? 0 : 256"
     >
       <v-list 
         dense
@@ -32,7 +33,6 @@
       :value="appBarVisible"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <!-- <v-toolbar-title>Application</v-toolbar-title> -->
     </v-app-bar>
 
     <v-content>
@@ -40,20 +40,14 @@
         <router-view />
       </v-container>
     </v-content>
-
-    <v-footer app>
-      <span>&copy; 2019</span>
-    </v-footer>
   </v-app>
 </template>
 
 <script>
-import { exists } from 'fs';
-
   export default {
     data: () => ({
       drawer: null,
-      appBarVisible: null,
+      appBarVisible: false,
       menuItems: [
         { icon: 'dashboard', text: 'Dashboard', route: '/' },
         { icon: 'person', text: 'Me', route: '/user' },
@@ -63,17 +57,16 @@ import { exists } from 'fs';
         { icon: 'settings', text: 'Settings', route: '/settings' }
       ]
     }),
-    created () {
-      this.$vuetify.theme.dark = true
-    },
     watch: {
       $route (to, from) {
-        const notVisibleOnRoutes = ["login", "register"]
+        const notVisibleOnRoutes = ['login', 'register']
         const path = to.path.split('/')[1]
-        const exists = notVisibleOnRoutes.indexOf(path)
-
-        this.appBarVisible = (exists >= 0 ? false : true)
+        const pathExists = notVisibleOnRoutes.indexOf(path) >= 0
+        this.appBarVisible = !pathExists
       }
+    },
+    created () {
+      this.$vuetify.theme.dark = true
     },
     methods: {
       async logout () {
