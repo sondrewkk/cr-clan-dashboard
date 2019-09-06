@@ -27,8 +27,14 @@
         align="start"
         justify="start"
       >
-        <h1>{{ player.name }}</h1>
-        <p class="mb-0">#{{ player.tag }}</p>
+        <h1>
+          {{ player.name }}
+        </h1>
+
+        <p class="mb-0">
+          #{{ player.tag }} 
+        </p>
+
         <v-row no-gutters>
           <p>{{ player.trophies }} / {{ player.stats.maxTrophies }} PB</p>
           <v-img 
@@ -42,6 +48,50 @@
         <v-divider />
       </v-col>
     </v-row>
+    <v-row v-if="upcomingChests && specialChests">
+      <v-col cols="12">
+        <h3>Chest Cycle</h3>
+      </v-col>
+        
+      <v-col 
+        v-for="(chestType, index) in upcomingChests"
+        :key="index"
+        cols="4"
+      >
+        <v-img 
+          v-if="chestType !== 'golden'" 
+          :src="`https://royaleapi.github.io/cr-api-assets/chests/chest-${chestType}.png`"
+          max-height="50px" 
+          max-width="50px"
+        />  
+        <v-chip
+          small
+          class="ml-5 mt-n6"
+          light
+        >
+          {{ index + 1 }}
+        </v-chip> 
+      </v-col>
+
+      <v-col
+        v-for="specialChest in specialChests"
+        :key="specialChest[0]"
+        cols="3"
+      >
+        <v-img 
+          :src="`https://royaleapi.github.io/cr-api-assets/chests/chest-${specialChest[0]}.png`"
+          max-height="50px" 
+          max-width="50px"
+        />
+        <v-chip
+          small
+          class="ml-5 mt-n6"
+          light
+        >
+          {{ specialChest[1] }}
+        </v-chip>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -51,7 +101,8 @@
   export default {
     data: () => ({
       player: null,
-      chests: null
+      upcomingChests: null,
+      specialChests: null
     }),
     created () {
       this.fetchPlayerInfo()
@@ -60,8 +111,37 @@
       async fetchPlayerInfo () {
         try {
           const tag = this.$store.getters['user/tag']
-          const response = await playerApi.profile(tag)
-          this.player = response.data
+          const profileResponse = await playerApi.profile(tag)
+          const chestsResponse = await playerApi.chests(tag)
+          
+          let upcomingChests = chestsResponse.data.upcoming
+          let specialChests = []
+
+          // Fix for chest name golden
+          for (let chest in upcomingChests) {
+            if (upcomingChests[chest] === 'golden') {
+              upcomingChests[chest] = 'gold'
+            }
+          }
+          
+          // Delete to be able to extract only special chests from response
+          delete chestsResponse.data.upcoming
+          delete chestsResponse.data._cacheTime
+
+          // Put all specialchests into an sortable array
+          for (let specialChest in chestsResponse.data) {
+            specialChests.push([specialChest, chestsResponse.data[specialChest]])
+          }
+
+          // Sort chest
+          specialChests.sort((a, b) => {
+            return a[1] - b[1]
+          })
+
+          this.player = profileResponse.data
+          this.upcomingChests = upcomingChests
+          this.specialChests = specialChests
+
         } catch (err) { 
           console.log(err)
         }
