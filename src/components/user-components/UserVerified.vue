@@ -56,17 +56,17 @@
       <v-col 
         v-for="(chestType, index) in upcomingChests"
         :key="index"
-        cols="4"
+        cols="3"
       >
         <v-img 
           v-if="chestType !== 'golden'" 
           :src="`https://royaleapi.github.io/cr-api-assets/chests/chest-${chestType}.png`"
-          max-height="50px" 
-          max-width="50px"
+          max-height="35px" 
+          max-width="35px"
         />  
         <v-chip
           small
-          class="ml-5 mt-n6"
+          class="ml-4 mt-n6"
           light
         >
           {{ index + 1 }}
@@ -80,12 +80,12 @@
       >
         <v-img 
           :src="`https://royaleapi.github.io/cr-api-assets/chests/chest-${specialChest[0]}.png`"
-          max-height="50px" 
-          max-width="50px"
+          max-height="35px" 
+          max-width="35px"
         />
         <v-chip
           small
-          class="ml-5 mt-n6"
+          class="ml-4 mt-n6"
           light
         >
           {{ specialChest[1] }}
