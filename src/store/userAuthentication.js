@@ -13,13 +13,14 @@ export const userAuthentication = {
         const response = await user.login(email, password)
         const token = response.data.token
         const isVerified = response.data.isVerified
-        const tag = response.data.playerProfile.tag
         
         commit('setToken', token)
         commit('setStatusAuthenticated')
         commit('user/setId', { id: response.data.userId }, { root: true })
 
+        // Playerprofile is only available when user is verified
         if (isVerified) {
+          const tag = response.data.playerProfile.tag
           commit('user/verify', null, { root: true })
           commit('user/setTag', tag, { root: true })
         }   
