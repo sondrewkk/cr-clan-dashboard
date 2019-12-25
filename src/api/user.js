@@ -15,9 +15,9 @@ export default {
     }
   },
 
-  async verify (id, playerProfile) {
+  async verify (id, tag) {
     try {
-      const response = await api.post('/user/verify', { id, playerProfile })
+      const response = await api.post('/user/verify', { id, tag })
 
       if (response.data.success) {
         return response.data.verified

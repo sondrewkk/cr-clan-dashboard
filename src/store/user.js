@@ -16,11 +16,7 @@ export const user = {
       const playerProfile = response.data
       
       if (playerProfile.tag === playerTag) {
-        const verified = await userApi.verify(id, {
-          // Shortcut since playerprofile schema is not complete
-          tag: playerProfile.tag,
-          name: playerProfile.name
-        })
+        const verified = await userApi.verify(id, playerProfile.tag)
 
         if (verified) {
           commit('verify')
