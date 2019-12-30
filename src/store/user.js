@@ -12,7 +12,21 @@ export const user = {
     async verifyTag ({ commit, state }, tag) {
       const playerTag = tag.tag
       const id = state.id.id
-      const response = await playerApi.profile(playerTag)
+      
+      // Check if player is added to db
+      let response = await playerApi.profile(playerTag)
+
+      // If not, add player and then get playerProfile data
+      if (!response)
+      {
+        response = await playerApi.add(playerTag)
+
+        if (response) {
+          resposne = await playerApi.profile(playerTag)
+        }
+      }
+      
+      // Verify tag with user
       const playerProfile = response.data
       
       if (playerProfile.tag === playerTag) {
