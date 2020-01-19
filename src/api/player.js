@@ -12,7 +12,7 @@ export default {
   },
   async add (tag) {
     try {
-      const response = await api.post(`/player/`, {"tag" : tag})
+      const response = await api.post(`/player/`, { tag: tag })
       
       return response
     } catch (err) {

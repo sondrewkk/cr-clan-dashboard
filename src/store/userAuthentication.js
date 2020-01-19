@@ -10,22 +10,21 @@ export const userAuthentication = {
     async login ({ commit }, { email, password }) {
       try {
         commit('setStatusAuthenticating')
-        const response = await user.login(email, password)
-        const token = response.data.token
-        const isVerified = response.data.isVerified
+        const loginInfo = await user.login(email, password)
         
-        commit('setToken', token)
+        commit('setToken', loginInfo.token)
         commit('setStatusAuthenticated')
-        commit('user/setId', { id: response.data.userId }, { root: true })
+        commit('user/setId', { id: loginInfo._id }, { root: true })
 
-        // Playerprofile is only available when user is verified
-        if (isVerified) {
-          const tag = response.data.playerProfile.tag
+        // Tag is only available when user is verified
+        if (loginInfo.verified) {
           commit('user/verify', null, { root: true })
-          commit('user/setTag', tag, { root: true })
+          commit('user/setTag', loginInfo.tag, { root: true })
         }   
-        
-        return response
+
+        const loginSuccsessful = this.token !== ''
+
+        return loginSuccsessful
       } catch (err) {
         console.error(err)
       }

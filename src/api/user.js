@@ -5,11 +5,17 @@ export default {
     try {
       const response = await api.post('/user/login', { email, password })
 
-      if (response.data.success) {
-        const token = `Bearer ${response.data.token}`
-        api.defaults.headers.common['Authorization'] = token
+      if (response.status === 200) {
+        const loginInfo = response.data
+
+        if (loginInfo.token) {
+          const token = `Bearer ${loginInfo.token}`
+          api.defaults.headers.common['Authorization'] = token
+        }
+  
+        return loginInfo
       }
-      return response
+      
     } catch (err) {
       console.error(err)
     }
@@ -19,8 +25,8 @@ export default {
     try {
       const response = await api.post('/user/verify', { id, tag })
 
-      if (response.data.success) {
-        return response.data.verified
+      if (response.status === 200) {
+        return response.data
       }
     } catch (err) {
       console.log(err)

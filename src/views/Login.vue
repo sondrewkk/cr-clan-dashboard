@@ -59,9 +59,9 @@
       async login () {
         try {
           const { email, password } = this
-          const response = await this.$store.dispatch('userAuthentication/login', { email, password })
+          const loginSuccessful = await this.$store.dispatch('userAuthentication/login', { email, password })
           
-          if (response.data.success) {
+          if (loginSuccessful) {
             // Check if user has verified the player profile, if not go to player route
             const isVerified = this.$store.getters['user/isVerified']
 
