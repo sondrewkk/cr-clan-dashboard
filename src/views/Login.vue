@@ -59,15 +59,22 @@
       async login () {
         try {
           const { email, password } = this
-          const response = await this.$store.dispatch('userAuthentication/login', { email, password })
+          const loginSuccessful = await this.$store.dispatch('userAuthentication/login', { email, password })
           
-          if (response.data.success) {
-            const redirect = this.$router.currentRoute.query.redirect
-            
-            if (redirect) {
-              this.$router.push(`${redirect}`)
+          if (loginSuccessful) {
+            // Check if user has verified the player profile, if not go to player route
+            const isVerified = this.$store.getters['user/isVerified']
+
+            if (!isVerified) {
+              this.$router.push('/user')
             } else {
-              this.$router.push('/')
+              const redirect = this.$router.currentRoute.query.redirect
+                          
+              if (redirect) {
+                this.$router.push(`${redirect}`)
+              } else {
+                this.$router.push('/')
+              }
             }
           }
         } catch (err) { console.error(err) }

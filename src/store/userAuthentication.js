@@ -10,11 +10,21 @@ export const userAuthentication = {
     async login ({ commit }, { email, password }) {
       try {
         commit('setStatusAuthenticating')
-        const response = await user.login(email, password)
-        const token = response.data.token
-        commit('setToken', token)
+        const loginInfo = await user.login(email, password)
+        
+        commit('setToken', loginInfo.token)
         commit('setStatusAuthenticated')
-        return response
+        commit('user/setId', { id: loginInfo._id }, { root: true })
+
+        // Tag is only available when user is verified
+        if (loginInfo.verified) {
+          commit('user/verify', null, { root: true })
+          commit('user/setTag', loginInfo.tag, { root: true })
+        }   
+
+        const loginSuccsessful = this.token !== ''
+
+        return loginSuccsessful
       } catch (err) {
         console.error(err)
       }
