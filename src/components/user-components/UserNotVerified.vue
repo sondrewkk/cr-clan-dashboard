@@ -39,7 +39,7 @@
       async verifyTag () {
         try {
           const { tag } = this
-          await this.$store.dispatch('user/verifyTag', { tag })
+          await this.$store.dispatch('user/verifyTag', tag)
 
         } catch (err) { console.error(err) }
       }

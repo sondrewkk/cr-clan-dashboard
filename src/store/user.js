@@ -1,4 +1,4 @@
-import playerApi from '../api/player'
+// import playerApi from '../api/player'
 import userApi from '../api/user'
 
 export const user = {
@@ -6,38 +6,24 @@ export const user = {
   state: {
     id: '',
     verified: false,
-    tag: ''
+    tag: '',
+    clanTag: '',
+    role: ''
   },
   actions: {
     async verifyTag ({ commit, state }, tag) {
-      const playerTag = tag.tag
-      const id = state.id.id
-      
-      // Check if player is added to db
-      let response = await playerApi.profile(playerTag)
+      const { id } = state.id
 
-      // If not, add player and then get playerProfile data
-      if (!response)
-      {
-        response = await playerApi.add(playerTag)
-
-        if (response) {
-          resposne = await playerApi.profile(playerTag)
-        }
-      }
+      const verifyInfo = await userApi.verify(id, tag)
       
-      // Verify tag with user
-      const playerProfile = response.data
-      
-      if (playerProfile.tag === playerTag) {
-        const verified = await userApi.verify(id, playerProfile.tag)
-
-        if (verified) {
-          commit('verify')
-          commit('setTag', playerProfile.tag)
-        }
+      if (verifyInfo.verified) {
+        commit('setTag', verifyInfo.tag)
+        commit('setClanTag', verifyInfo.clanTag)
+        commit('setRole', verifyInfo.role)
+        commit('userAuthentication/setToken', verifyInfo.token, { root: true })
+        commit('verify')
       } else {
-        console.log('Could not verify. Tag != tag')
+        console.log('Could not verify player with tag: ' + tag)
       }
     }
   },
@@ -50,10 +36,18 @@ export const user = {
     },
     setTag (state, tag) {
       state.tag = tag
+    },
+    setClanTag (state, clanTag) {
+      state.clanTag = clanTag
+    },
+    setRole (state, role) {
+      state.role = role
     }
   },
   getters: {
     isVerified: state => { return state.verified },
-    tag: state => { return state.tag }
+    tag: state => { return state.tag },
+    clanTag: state => { return state.clanTag },
+    role: state => { return state.role }
   }
 }

@@ -26,7 +26,15 @@ export default {
       const response = await api.post('/user/verify', { id, tag })
 
       if (response.status === 200) {
-        return response.data
+        
+        const verificationInfo = response.data
+
+        if (verificationInfo.token) {
+          const token = `Bearer ${verificationInfo.token}`
+          api.defaults.headers.common['Authorization'] = token
+        }
+
+        return verificationInfo
       }
     } catch (err) {
       console.log(err)
