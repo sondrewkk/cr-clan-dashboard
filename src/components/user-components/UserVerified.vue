@@ -1,26 +1,5 @@
 <template>
-  <v-container fluid>
-    <!-- <v-layout 
-      v-if="player" 
-      row
-    >
-      <v-flex xs12>
-        <v-layout column>
-          <h3>{{ player.name }}</h3>
-          <p>#{{ player.tag }}</p>
-          <v-layout row>
-            <span>{{ player.trophies }} / {{ player.stats.maxTrophies }} PB</span>
-            <v-img 
-              class=" ml-2" 
-              src="https://royaleapi.com/static/img/ui/trophy.png" 
-              max-height="22px" 
-              max-width="22px" 
-              aspect-ratio="1"
-            />
-          </v-layout>
-        </v-layout>
-      </v-flex>
-    </v-layout> -->
+  <v-container>
     <v-row v-if="player">
       <v-col 
         cols="12"
@@ -56,7 +35,6 @@
       <v-col 
         v-for="(chestType, index) in upcomingChests"
         :key="index"
-        cols="3"
       >
         <v-img 
           v-if="chestType !== 'golden'" 
@@ -72,23 +50,25 @@
           {{ index + 1 }}
         </v-chip> 
       </v-col>
-
+ 
       <v-col
         v-for="specialChest in specialChests"
         :key="specialChest[0]"
-        cols="3"
+        
       >
         <v-img 
+          v-if="specialChest[1] > 10"
           :src="`https://royaleapi.github.io/cr-api-assets/chests/chest-${specialChest[0]}.png`"
           max-height="35px" 
           max-width="35px"
         />
         <v-chip
+          v-if="specialChest[1] > 10"
           small
           class="ml-4 mt-n6"
           light
         >
-          {{ specialChest[1] }}
+          {{ specialChest[1] + 1 }}
         </v-chip>
       </v-col>
     </v-row>
