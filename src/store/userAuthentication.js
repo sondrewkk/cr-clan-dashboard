@@ -15,6 +15,7 @@ export const userAuthentication = {
         commit('setToken', loginInfo.token)
         commit('setStatusAuthenticated')
         commit('user/setId', { id: loginInfo._id }, { root: true })
+        commit('user/setRole', loginInfo.role , { root: true })
 
         // Tag is only available when user is verified
         if (loginInfo.verified) {
