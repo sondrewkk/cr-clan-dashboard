@@ -53,8 +53,7 @@
  
       <v-col
         v-for="specialChest in specialChests"
-        :key="specialChest[0]"
-        
+        :key="specialChest[0]"  
       >
         <v-img 
           v-if="specialChest[1] > 10"
